@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ProductDaoImplIntegrationTests {
 
-    private final ProductDaoImpl underTest;
+    private ProductDaoImpl underTest;
 
     @Autowired
     public ProductDaoImplIntegrationTests(ProductDaoImpl underTest) {
@@ -29,11 +29,11 @@ public class ProductDaoImplIntegrationTests {
 
     @Test
     public void testThatProductCanBeCreatedAndRecalled() {
-        Product product = TestDataUtil.createTestProductA();
+        Product product = TestDataUtil.createTestProduct();
         underTest.create(product);
-        Optional<Product> results = underTest.findOne(product.getId());
-        assertThat(results).isPresent();
-        assertThat(results.get()).isEqualTo(product);
+        Optional<Product> result = underTest.findOne(product.getId());
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(product);
     }
 
     @Test
@@ -42,6 +42,7 @@ public class ProductDaoImplIntegrationTests {
         Product productB = TestDataUtil.createTestProductB();
         Product productC = TestDataUtil.createTestProductC();
 
+        underTest.truncate();
         underTest.create(productA);
         underTest.create(productB);
         underTest.create(productC);

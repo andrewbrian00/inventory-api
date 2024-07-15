@@ -23,10 +23,7 @@ public class SupplierDaoImpl implements SupplierDao {
     @Override
     public void create(Supplier supplier) {
         jdbcTemplate.update(
-                "INSERT INTO suppliers " +
-                        "(name," +
-                        "address)" +
-                        "VALUES (?,?)",
+                "INSERT INTO cajap.suppliers (name, address) VALUES (?,?)",
                 supplier.getName(),
                 supplier.getAddress()
         );
@@ -36,7 +33,7 @@ public class SupplierDaoImpl implements SupplierDao {
     public Optional<Supplier> findOne(long supplierId) {
         List<Supplier> results = jdbcTemplate.query(
                 "SELECT id, name, address " +
-                        "FROM suppliers WHERE id = ? LIMIT 1",
+                        "FROM cajap.suppliers WHERE id = ? LIMIT 1",
                 new SupplierDaoImpl.SupplierRowMapper(), supplierId);
         return results.stream().findFirst();
     }

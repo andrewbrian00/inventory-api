@@ -15,9 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ProductDaoImplTests {
 
     @Mock
@@ -28,15 +26,18 @@ public class ProductDaoImplTests {
 
     @Test
     public void testThatCreateProductGeneratesCorrectSql() {
-        Product product = TestDataUtil.createTestProductA();
+        Product product = TestDataUtil.createTestProduct();
+
         underTest.create(product);
 
         verify(jdbcTemplate).update(
-                eq("INSERT INTO products " +
-                        "(id, part_number, name, amount, unit_measure, description, category)" +
-                        " VALUES (?,?,?,?,?,?,?)"),
-                eq(1L), eq("10002"), eq("NSK Bearing"), eq(120.0), eq("inch"),
-                eq("NSK diameter 2"), eq("Bearing")
+                eq("INSERT INTO cajap.products (part_number, name, amount, unit_measure, description, category) VALUES (?,?,?,?,?,?)"),
+                eq("10001"),
+                eq("NSK Bearing"),
+                eq(100.0d),
+                eq("inch"),
+                eq("NSK diameter 1"),
+                eq("Bearing")
         );
 
     }
@@ -45,9 +46,19 @@ public class ProductDaoImplTests {
     public void testThatFindOneGeneratesTheCorrectSql() {
         underTest.findOne(1L);
         verify(jdbcTemplate).query(
-                eq("SELECT id, part_number, name, amount, unit_measure, description, category FROM products WHERE id = ? LIMIT 1"),
+                eq("SELECT id, part_number, name, amount, unit_measure, description, category FROM cajap.products WHERE id = ? LIMIT 1"),
                 ArgumentMatchers.<ProductDaoImpl.ProductRowMapper>any(),
                 eq(1L)
         );
     }
+
+//    @Test
+//    public void testThatDeleteAllGeneratesTheCorrectSql() {
+//        underTest.truncate();
+//        verify(jdbcTemplate).query(
+//                eq("SELECT * FROM PRODUCTS"),
+//                eq()
+//                );
+//
+//    }
 }

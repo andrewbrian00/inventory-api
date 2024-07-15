@@ -23,7 +23,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public void create(Product product) {
         jdbcTemplate.update(
-                "INSERT INTO products (part_number, name, amount, unit_measure, description, category)" +
+                "INSERT INTO cajap.products (part_number, name, amount, unit_measure, description, category) " +
                         "VALUES (?,?,?,?,?,?)",
                 product.getPartNumber(),
                 product.getName(),
@@ -32,13 +32,14 @@ public class ProductDaoImpl implements ProductDao {
                 product.getDescription(),
                 product.getCategory()
         );
+
     }
 
     @Override
     public Optional<Product> findOne(long productId) {
         List<Product> results = jdbcTemplate.query(
                 "SELECT id, part_number, name, amount, unit_measure, description, category " +
-                        "FROM products WHERE id = ? LIMIT 1",
+                        "FROM cajap.products WHERE id = ? LIMIT 1",
                 new ProductRowMapper(), productId);
         return results.stream().findFirst();
     }
@@ -63,8 +64,13 @@ public class ProductDaoImpl implements ProductDao {
     public List<Product> find() {
         return jdbcTemplate.query(
                 "SELECT id, part_number, name, amount, unit_measure, description, category" +
-                        " FROM products ",
+                        " FROM cajap.products ",
                 new ProductRowMapper()
         );
+    }
+
+    @Override
+    public void truncate() {
+        jdbcTemplate.execute("DELETE FROM products");
     }
 }

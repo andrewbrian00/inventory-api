@@ -12,4 +12,7 @@ public interface ProductDao {
     Optional<Product> findOne(long l);
 
     List<Product> find();
+
+
+    void truncate();
 }
