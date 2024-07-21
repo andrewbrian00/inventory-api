@@ -1,1 +1,0 @@
-INSERT INTO cajap.products (part_number, name, amount, unit_measure, description, category) VALUES ('10001', 'NSK Bearing', 100.0,'inch','NSK diameter 1','Bearing')

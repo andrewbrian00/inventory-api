@@ -1,7 +1,9 @@
 package com.cajap.app;
 
-import com.cajap.app.domain.Product;
-import com.cajap.app.domain.Supplier;
+import com.cajap.app.domain.dto.ProductDto;
+import com.cajap.app.domain.entities.InventoryEntity;
+import com.cajap.app.domain.entities.ProductEntity;
+import com.cajap.app.domain.entities.SupplierEntity;
 
 public class TestDataUtil {
 
@@ -9,8 +11,8 @@ public class TestDataUtil {
 
     }
 
-    public static Product createTestProduct() {
-        return Product.builder()
+    public static ProductEntity createTestProduct() {
+        return ProductEntity.builder()
                 .id(1L)
                 .partNumber("10001")
                 .name("NSK Bearing")
@@ -21,9 +23,9 @@ public class TestDataUtil {
                 .build();
     }
 
-    public static Product createTestProductA() {
-        return Product.builder()
-                .id(2L)
+    public static ProductEntity createTestProductA() {
+        return ProductEntity.builder()
+                .id(1L)
                 .partNumber("10002")
                 .name("NSK Bearing")
                 .amount(120.0d)
@@ -33,9 +35,8 @@ public class TestDataUtil {
                 .build();
     }
 
-    public static Product createTestProductB() {
-        return Product.builder()
-                .id(3L)
+    public static ProductEntity createTestProductB() {
+        return ProductEntity.builder()
                 .partNumber("10003")
                 .name("NSK Bearing")
                 .amount(130.0d)
@@ -45,9 +46,8 @@ public class TestDataUtil {
                 .build();
     }
 
-    public static Product createTestProductC() {
-        return Product.builder()
-                .id(4L)
+    public static ProductEntity createTestProductC() {
+        return ProductEntity.builder()
                 .partNumber("10004")
                 .name("NSK Bearing")
                 .amount(140.0d)
@@ -57,11 +57,33 @@ public class TestDataUtil {
                 .build();
     }
 
-    public static Supplier createTestSupplier() {
-        return Supplier.builder()
+    public static ProductDto createTestProductDto() {
+        return ProductDto.builder()
+                .id(1L)
+                .partNumber("10002")
+                .name("NSK Bearing")
+                .amount(120.0d)
+                .unitMeasure("inch")
+                .description("NSK diameter 2")
+                .category("Bearing")
+                .build();
+    }
+
+    public static SupplierEntity createTestSupplier() {
+        return SupplierEntity.builder()
                 .id(1L)
                 .name("Andrew")
                 .address("Cabuyao")
+                .build();
+    }
+
+    public static InventoryEntity createTestInventory(ProductEntity productEntity, SupplierEntity supplierEntity) {
+        return InventoryEntity.builder()
+                .id(1L)
+                .itemName("NSK Bearing")
+                .itemCount(3)
+                .product(productEntity)
+                .supplier(supplierEntity)
                 .build();
     }
 }
